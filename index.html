@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="jQuery.js"></script>
+    <script>
+        $(function(){
+            var bigScene=$("<div>");
+            bigScene.css({
+                width:800,height:400,
+                position:"fixed",top:0,left:0,right:0,bottom:0,
+                margin:"auto"
+            }).appendTo("body");
+            var num=4;
+            var arr=[];
+            for(var i=0;i<num;i++){
+                var k=400/num;
+                var scene=$("<div>");
+                scene.css({
+                    width:"100%",height:100/num+"%",
+                    perspective:"5000px"
+                }).appendTo(bigScene);
+                var box=$("<div>");
+                arr.push(box);
+                box.css({
+                    width: "100%",height: "100%",
+                    position: "relative",transformStyle:"preserve-3d",transition:"all 2s ease "+i*0.1+"s",
+                    transformOrigin:"center center 200px"
+                }).appendTo(scene);
+                for(var j=0;j<6;j++){
+                    var panel=$("<div>");
+                    panel.css({
+                        position: "absolute",left:0,top:0
+                    }).appendTo(box);
+                    if(j==0){
+                        panel.css({
+                            width:"100%",
+                            height:"400px",
+                            transform:"rotateX(90deg)",
+                            transformOrigin:"top"
+                        })
+                    }else if(j==1){
+                        panel.css({
+                            width:"400px",
+                            height:"100%",
+                            transform:"rotateY(-90deg)",
+                            transformOrigin:"left",
+                            background:"url(images/small1.jpg) no-repeat 0 "+(-i*k)+"px"
+                        })
+                    }else if(j==2) {
+                        panel.css({
+                            width: "100%",
+                            height: "100%",
+                            transform: "rotateY(180deg)",
+                            background: "url(images/big3.jpg) no-repeat 0 " + (-i*k) + "px"
+                        })
+                    }else if(j==3) {
+                        panel.css({
+                            width: "400px",
+                            height: "100%",
+                            left:400,
+                            transform: "rotateY(90deg)",
+                            transformOrigin: "right",
+                            background: "url(images/small3.jpg) no-repeat 0 " + (-i*k) + "px"
+                        })
+                    }else if(j==4) {
+                        panel.css({
+                            width: "400px",
+                            height: "400px",
+                            bottom:0,
+                            transform: "rotateX(-90deg)",
+                            transformOrigin: "bottom"
+                        })
+                    }else if(j==5) {
+                        panel.css({
+                            width: "100%",
+                            height: "100%",
+                            transform: "translateZ(400px)",
+                            transformOrigin: "bottom",
+                            background: "url(images/1.jpg) no-repeat 0 " + (-i*k) + "px"
+                        })
+                    }
+                }
+            }
+            var a=0;
+            window.onblur=function(){
+                clearInterval(time);
+            }
+            window.onfocus=function(){
+                time=setInterval(move,4000);
+            }
+            var time=setInterval(move,4000);
+            function move(){
+                a+=90;
+                for(var i=0;i<arr.length;i++){
+                    arr[i].css({
+                        transform:"rotateY("+a+"deg)"
+                    })
+                }
+            }
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>
+
